@@ -9,27 +9,52 @@
 namespace app\api\controller;
 
 use app\api\model\Article;
+use app\api\model\Singer;
+use app\api\model\SongSheet;
 
 class Test extends Base
 {
     public function test()
     {
-        /**
-         * 触发器test
-         */
-        try{
-            $one_article = Article::get(['article_id'=>'ou2WW5B9Yek_22WE4dLV_IN8TqG8_1538377904']);
-            $one_article->visit_sum = '10';
-            $res = $one_article->isUpdate(true)->save();
 
-            if($res === false){
-                echo '更新失败';
-            }else{
-                echo '更新成功';
-            }
-        }catch (\Exception $e){
-            echo $e->getMessage();
-        }
+//        $res = SongSheet::get(['song_sheet_id'=>'001']);
+//
+//        echo gettype($res);
+//        echo $res;
+
+//        $path = APP_PATH .'../public/static/musics';
+//
+//       $res1 = opendir($path);
+//
+//       $resArr = [];
+//
+//       while ($r = readdir($res1)){
+//           if($r == '.' || $r == '..'){
+//               continue;
+//           }
+//
+//           $r_data = 'http://119.23.78.140/public/static/musics/'.rawurlencode($r);
+//          array_push($resArr,$r_data);
+//
+//       }
+//
+//        dump($resArr);
+
+      //  dump(scandir($path)) ;
+
+//        try{
+//            $one_article = Article::get(['article_id'=>'ou2WW5B9Yek_22WE4dLV_IN8TqG8_1538377904']);
+//            $one_article->visit_sum = '10';
+//            $res = $one_article->isUpdate(true)->save();
+//
+//            if($res === false){
+//                echo '更新失败';
+//            }else{
+//                echo '更新成功';
+//            }
+//        }catch (\Exception $e){
+//            echo $e->getMessage();
+//        }
 
 //
 //        try {

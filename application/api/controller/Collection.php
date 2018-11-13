@@ -58,19 +58,20 @@ class Collection extends Base
     public function collect($article_id, $skey)
     {
         try {
-            //处理数据
-            $m_collection = model('Collection');
+        //处理数据
+        $m_collection = model('Collection');
 
-            $insert_data = [
-                'collection_id' => $this->create_id($article_id, $skey),
-                'uid' => Session::get($skey),
-                'article_id' => $article_id,
-            ];
+        $insert_data = [
+            'collection_id' => $this->create_id($article_id,$skey),
+            'uid' => Session::get($skey),
+            'article_id' => $article_id,
+        ];
+
 
 
             $res = $m_collection->allowField(true)->save($insert_data);
-        } catch (\Exception $e) {
-            $this->return_msg('500', $e->getMessage());
+        }catch (\Exception $e){
+            $this->return_msg('500',$e->getMessage());
 
         }
 
