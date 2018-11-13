@@ -10,9 +10,19 @@ class Index
 
     public function test()
     {
-        $data = [
-            'weixin'=>'testtt'
-        ];
-        return json($data);
+
+        $s = '001';
+        echo gettype($s);
+        echo '<br>';
+        $s++;
+
+        echo gettype($s);
+        echo '<br>';
+
+        echo '00'.$s;
+//        $data = [
+//            'weixin'=>'testtt'
+//        ];
+//        return json($data);
     }
 }

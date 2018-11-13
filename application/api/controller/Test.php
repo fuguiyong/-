@@ -11,11 +11,133 @@ namespace app\api\controller;
 use app\api\model\Article;
 use app\api\model\Singer;
 use app\api\model\SongSheet;
+use app\api\model\Musics;
 
 class Test extends Base
 {
+
+    public function sub_singer_name($res)
+    {
+
+        for ($i = 0; $i < strlen($res); $i++) {
+            if ($res[$i] == ' ') {
+                $len = $i;
+                break;
+            }
+        }
+
+        $singer_name = substr($res, 0, $len);
+
+        return $singer_name;
+
+    }
+
+
+    public function sub_song_name($res)
+    {
+        $start = 0;
+        $len = 0;
+
+
+        for ($i = 0; $i < strlen($res); $i++) {
+            if ($res[$i] == ' ' && $res[$i + 1] != '-') {
+                $start = $i + 1;
+                continue;
+            }
+
+            if ($res[$i] == '.') {
+                $len = $i - $start;
+                break;
+            }
+        }
+
+        $song_name = substr($res, $start, $len);
+
+        return $song_name;
+
+    }
+
+    public function get_song_id($id)
+    {
+        if ($id < 10) {
+            return '00' . $id;
+        } else {
+            return '0' . $id;
+        }
+    }
+
     public function test()
     {
+        $path = APP_PATH . '../public/static/musics';
+        $fileRes = opendir($path);
+
+
+        $song_id = 1;
+        $datas = [];
+
+        while ($res = readdir($fileRes)) {
+
+            if ($res == '.' || $res == '..') {
+                continue;
+            }
+            //echo $res;
+            $data = [
+                'song_id' => $this->get_song_id($song_id),
+                'singer_id' => '001',
+                'song_sheet_id' => '001',
+                'song_name' => $this->sub_song_name($res),
+                'singer_name' => $this->sub_singer_name($res),
+                'song_image' => 'http://119.23.78.140/public/static/xiao_image/fu4.jpg',
+                'download_url' => 'http://119.23.78.140/public/static/musics/' . $res,
+                'lyric'=>'无'
+            ];
+
+            array_push($datas, $data);
+
+            $song_id++;
+            $m = new Musics;
+            $m->save($data);
+
+
+        }
+//
+//        $m = new Musics;
+//        $m->saveAll($datas);
+
+
+
+//        dump($datas);
+//
+//        try{
+//
+//            $one_music = model('Musics');
+//            $sqlRes = $one_music->allowField(true)->saveAll($datas);
+//        }catch (\Exception $e){
+//            echo $e->getMessage();
+//        }
+//
+//
+//        if ($sqlRes !== false) {
+//            echo 'success';
+//            echo '<br>';
+//        }
+
+//        $data = [
+//            'song_id'=>'6789',
+//            'singer_id'=>'001',
+//            'song_sheet_id'=>'765',
+//            'song_name'=>'顶顶顶',
+//            'singer_name'=>'jj',
+//            'song_image'=>'dddd',
+//            'download_url'=>'http://120.77.210.81/pubic'
+//        ];
+//        $one_music = model('Musics');
+//        $Res = $one_music->save($data);
+//
+//        if($Res !== false){
+//            echo 'success';
+//        }
+
 
 //        $res = SongSheet::get(['song_sheet_id'=>'001']);
 //
@@ -40,7 +162,7 @@ class Test extends Base
 //
 //        dump($resArr);
 
-      //  dump(scandir($path)) ;
+        //  dump(scandir($path)) ;
 
 //        try{
 //            $one_article = Article::get(['article_id'=>'ou2WW5B9Yek_22WE4dLV_IN8TqG8_1538377904']);
